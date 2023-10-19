@@ -1,10 +1,12 @@
 package eleicoes;
 
-import java.util.Date;
+import java.time.LocalDate;
+//import java.util.Date;
 
 public class CandidatoFederal extends Candidato{
-    public CandidatoFederal(int numeroCandidato, String nomeUrna, Partido partido, Date dataNascimento, 
-    Boolean candidatoEleito, int genero){
-        super(numeroCandidato, nomeUrna, partido, dataNascimento, candidatoEleito, genero);
+    public CandidatoFederal(int numeroCandidato, String nomeUrna, Partido partido, LocalDate dataNascimento,
+    Boolean candidatoEleito, int genero, String destVotos, int situacaoCandidato){
+        super(numeroCandidato, nomeUrna, partido, dataNascimento, candidatoEleito, genero, destVotos, situacaoCandidato);
     }
 }
+
