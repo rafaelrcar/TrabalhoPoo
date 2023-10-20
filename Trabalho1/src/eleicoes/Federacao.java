@@ -34,4 +34,8 @@ public class Federacao {
     public void adicionaPartido(Partido p){
         partidosFederacao.add(p);
     }
+
+    public void setLegendaFederacao(int legendaFederacao) {
+        this.legendaFederacao = legendaFederacao;
+    }
 }

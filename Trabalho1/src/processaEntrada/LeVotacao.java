@@ -1,13 +1,12 @@
 package processaEntrada;
 import eleicoes.*;
-import java.util.List;
 import java.util.Scanner;
 import java.io.FileInputStream;
 import java.util.HashMap;
 
 public class LeVotacao{
 
-    public static void leitura(List<Candidato> candidatos, HashMap<Integer, Partido> partidos, HashMap<Integer, Federacao> federacoes, int tipoCandidato){
+    public static void leitura(HashMap<Integer, Candidato> candidatos, HashMap<Integer, Partido> partidos, HashMap<Integer, Federacao> federacoes, int tipoCandidato){
         
         try(FileInputStream fin = new FileInputStream("teste.csv");
             Scanner s = new Scanner(fin, "ISO-8859-1")){
@@ -23,13 +22,21 @@ public class LeVotacao{
                     if(Integer.parseInt(cargo) == tipoCandidato){
                         setScanner(lineScanner, 2);
                         String destinoVotos = lineScanner.next();
-                        int destVotos = Integer.parseInt(destinoVotos);
+                        int candidatoVotado = Integer.parseInt(destinoVotos);
 
-                        if(destVotos >=95 && destVotos <= 98){
+                        if(candidatoVotado >= 95 && candidatoVotado <= 98){
                             setScanner(lineScanner, 2);
                             String qtdVotos = lineScanner.next();
 
-                            
+                            if(candidatos.containsKey(candidatoVotado)){
+                                Candidato c = candidatos.get(candidatoVotado);
+                                c.setQuantidadeVotos(Integer.parseInt(qtdVotos));
+
+                            }
+                            else if(partidos.containsKey(candidatoVotado)){
+                                Partido p = partidos.get(candidatoVotado);
+                                p.setLegendaPartido(Integer.parseInt(qtdVotos));
+                            }
                         }
                     }
                 }

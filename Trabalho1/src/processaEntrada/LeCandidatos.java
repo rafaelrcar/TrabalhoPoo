@@ -1,7 +1,6 @@
 package processaEntrada;
 import java.io.FileInputStream;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.time.format.DateTimeFormatter;
@@ -10,7 +9,7 @@ import eleicoes.*;
 
 public class LeCandidatos{
 
-    public static void leitura(List<Candidato> candidatos, HashMap<Integer, Partido> partidos, HashMap<Integer, Federacao> federacoes, int tipoCandidato) {
+    public static void leitura(HashMap<Integer, Candidato> candidatos, HashMap<Integer, Partido> partidos, HashMap<Integer, Federacao> federacoes, int tipoCandidato) {
         
         try(FileInputStream fin = new FileInputStream("teste.csv");
             Scanner s = new Scanner(fin, "ISO-8859-1")){
@@ -50,10 +49,10 @@ public class LeCandidatos{
                         Federacao f = Federacao.verificaFederacao(Integer.parseInt(numeroFederacao), nomeFederacao, federacoes);
                         Partido p = Partido.verificaPartido(Integer.parseInt(numeroPartido), siglaPartido, nomePartido, f, partidos);
 
-                        Candidato cf = new Candidato(Integer.parseInt(numero), nome, p, 
+                        Candidato c = new Candidato(Integer.parseInt(numero), nome, p, 
                         LocalDate.parse(dataNascimento,DateTimeFormatter.ofPattern("dd/MM/yyyy")), 
                         Boolean.parseBoolean(candidatoEleito), Integer.parseInt(genero), destinacaoVotos, Integer.parseInt(situacaoCandidato));
-                        candidatos.add(cf);
+                        candidatos.put(Integer.parseInt(numero), c);
                     }
                 }
             }

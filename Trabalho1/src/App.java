@@ -1,12 +1,11 @@
 import eleicoes.*;
 import processaEntrada.LeCandidatos;
 import processaEntrada.LeVotacao;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class App {
     public static void main(String[] args) throws Exception {
-        ArrayList<Candidato> candidatos = new ArrayList<>();
+        HashMap<Integer, Candidato> candidatos = new HashMap<>();
         HashMap<Integer, Partido> partidos = new HashMap<>();
         HashMap<Integer, Federacao> federacoes = new HashMap<>();
 

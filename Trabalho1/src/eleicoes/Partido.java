@@ -40,5 +40,12 @@ public class Partido {
     public String getNomePartido() {
         return this.nomePartido;
     }
-    
+
+    public void setLegendaPartido(int legendaPartido) {
+        this.legendaPartido = legendaPartido;
+
+        if(federacao != null){
+            federacao.setLegendaFederacao(legendaPartido);
+        }
+    }
 }

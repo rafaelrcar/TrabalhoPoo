@@ -15,6 +15,7 @@ public class Candidato {
     private int situacaoCandidato; //CD_SITUACAO_CANDIDADO_TOT (67)
     private int quantidadeVotos; //QT_VOTOS (21)
 
+
     public Candidato(int numeroCandidato, String nomeUrna, Partido partido, LocalDate dataNascimento,
             Boolean candidatoEleito, int genero, String destVotos, int situacaoCandidato) {
         this.numeroCandidato = numeroCandidato;
@@ -29,15 +30,8 @@ public class Candidato {
         partido.adicionaCandidatos(this);
     }
 
-    public void imprimeCandidato(){
-        System.out.println("Numero do candidato: " + this.numeroCandidato);
-        System.out.println("Nome do candidato: " + this.nomeUrna);
-        System.out.println("Partido: " + this.partido.getNomePartido());
-        DateTimeFormatter formatoSaida = DateTimeFormatter.ofPattern("dd/MM/uuuu");
-        System.out.println("Data de nascimento: " + formatoSaida.format(dataNascimento));
-        System.out.println("Candidato eleito: " + this.candidatoEleito);
-        System.out.println("Genero: " + this.genero);
-        System.out.println("Destino dos votos: " + this.destinacaoVotos);
-        System.out.println("Situacao candidato: " + this.situacaoCandidato);
+    public void setQuantidadeVotos(int quantidadeVotos) {
+        this.quantidadeVotos = quantidadeVotos;
+        partido.setLegendaPartido(quantidadeVotos);
     }
 }
