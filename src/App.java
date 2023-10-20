@@ -9,11 +9,11 @@ public class App {
         HashMap<Integer, Partido> partidos = new HashMap<>();
         HashMap<Integer, Federacao> federacoes = new HashMap<>();
 
-        if(args[3] == "--federal"){
+        if(args[0] == "--federal"){
             LeCandidatos.leitura(candidatos, partidos, federacoes, 6);
             LeVotacao.leitura(candidatos, partidos, federacoes, 6);
         }
-        else if(args[3] == "--estadual"){
+        else if(args[0] == "--estadual"){
             LeCandidatos.leitura(candidatos, partidos, federacoes, 7);
             LeVotacao.leitura(candidatos, partidos, federacoes, 7);
         }
