@@ -31,7 +31,20 @@ public class Candidato {
     }
 
     public void setQuantidadeVotos(int quantidadeVotos) {
-        this.quantidadeVotos = quantidadeVotos;
-        partido.setLegendaPartido(quantidadeVotos);
+        if(situacaoCandidato == 2 || situacaoCandidato == 16){
+            this.quantidadeVotos += quantidadeVotos;
+            partido.setVotosNominais(quantidadeVotos);
+        }
+        else{
+            if(destinacaoVotos == "Válido (legenda)"){
+                partido.setLegendaPartido(quantidadeVotos);
+            }
+        }
+        
     }
+
+    public Partido getPartido() {
+        return partido;
+    }
+    
 }

@@ -36,6 +36,6 @@ public class Federacao {
     }
 
     public void setLegendaFederacao(int legendaFederacao) {
-        this.legendaFederacao = legendaFederacao;
+        this.legendaFederacao += legendaFederacao;
     }
 }

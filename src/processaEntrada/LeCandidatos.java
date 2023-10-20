@@ -11,8 +11,7 @@ public class LeCandidatos{
 
     public static void leitura(HashMap<Integer, Candidato> candidatos, HashMap<Integer, Partido> partidos, HashMap<Integer, Federacao> federacoes, int tipoCandidato) {
         
-        try(FileInputStream fin = new FileInputStream("teste.csv");
-            Scanner s = new Scanner(fin, "ISO-8859-1")){
+        try(FileInputStream fin = new FileInputStream("candidatos.csv"); Scanner s = new Scanner(fin, "ISO-8859-1")){
             s.nextLine();
             
             while(s.hasNextLine()){
@@ -23,18 +22,20 @@ public class LeCandidatos{
 
                     setScanner(lineScanner, 13);
                     String cargo = lineScanner.next();
+                    setScanner(lineScanner, 2);
+                    String numero = lineScanner.next();
+                    setScanner(lineScanner, 1);
+                    String nome = lineScanner.next();
+                    setScanner(lineScanner, 8);
+                    String numeroPartido = lineScanner.next();
+                    String siglaPartido = lineScanner.next();
+                    String nomePartido = lineScanner.next();
+                    String numeroFederacao = lineScanner.next();
+                    String nomeFederacao = lineScanner.next();
+                    Federacao f = Federacao.verificaFederacao(Integer.parseInt(numeroFederacao), nomeFederacao, federacoes);
+                    Partido p = Partido.verificaPartido(Integer.parseInt(numeroPartido), siglaPartido, nomePartido, f, partidos);
 
                     if(Integer.parseInt(cargo) == tipoCandidato){
-                        setScanner(lineScanner, 2);
-                        String numero = lineScanner.next();
-                        setScanner(lineScanner, 1);
-                        String nome = lineScanner.next();
-                        setScanner(lineScanner, 8);
-                        String numeroPartido = lineScanner.next();
-                        String siglaPartido = lineScanner.next();
-                        String nomePartido = lineScanner.next();
-                        String numeroFederacao = lineScanner.next();
-                        String nomeFederacao = lineScanner.next();
                         setScanner(lineScanner, 10);
                         String dataNascimento = lineScanner.next();
                         setScanner(lineScanner, 2);
@@ -45,10 +46,6 @@ public class LeCandidatos{
                         String destinacaoVotos = lineScanner.next();
                         String situacaoCandidato = lineScanner.next();
 
-
-                        Federacao f = Federacao.verificaFederacao(Integer.parseInt(numeroFederacao), nomeFederacao, federacoes);
-                        Partido p = Partido.verificaPartido(Integer.parseInt(numeroPartido), siglaPartido, nomePartido, f, partidos);
-
                         Candidato c = new Candidato(Integer.parseInt(numero), nome, p, 
                         LocalDate.parse(dataNascimento,DateTimeFormatter.ofPattern("dd/MM/yyyy")), 
                         Boolean.parseBoolean(candidatoEleito), Integer.parseInt(genero), destinacaoVotos, Integer.parseInt(situacaoCandidato));
@@ -58,8 +55,8 @@ public class LeCandidatos{
             }
         }
         catch(Exception e){
-            System.out.println("arquivo nao encontrado");
-            e.printStackTrace();
+                System.out.println("arquivo nao encontrado");
+                e.printStackTrace();
         }
     }
 

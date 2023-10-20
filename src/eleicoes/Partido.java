@@ -9,6 +9,7 @@ public class Partido {
     private String siglaPartido;
     private String nomePartido;
     private int legendaPartido;
+    private int votosNominais;
     private Federacao federacao;
     private List<Candidato> candidatos = new ArrayList<>();
     
@@ -42,10 +43,26 @@ public class Partido {
     }
 
     public void setLegendaPartido(int legendaPartido) {
-        this.legendaPartido = legendaPartido;
+        this.legendaPartido += legendaPartido;
 
         if(federacao != null){
             federacao.setLegendaFederacao(legendaPartido);
         }
     }
+
+    public void setVotosNominais(int votosNominais){
+        this.votosNominais += votosNominais;
+    }
+
+    public int getLegendaPartido() {
+        return legendaPartido;
+    }
+    public int getVotosNominais() {
+        return votosNominais;
+    }
+
+    public String getSiglaPartido() {
+        return siglaPartido;
+    }
+    
 }
