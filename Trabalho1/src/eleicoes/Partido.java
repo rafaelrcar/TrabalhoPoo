@@ -8,9 +8,9 @@ public class Partido {
     private int numeroPartido;
     private String siglaPartido;
     private String nomePartido;
-    private List<Candidato> candidatos = new ArrayList<>();
+    private int legendaPartido;
     private Federacao federacao;
-    private int numeroVotos;
+    private List<Candidato> candidatos = new ArrayList<>();
     
     public Partido(int numeroPartido, String siglaPartido, String nomePartido, Federacao federacao) {
         this.numeroPartido = numeroPartido;
@@ -26,8 +26,15 @@ public class Partido {
         else{
             Partido p = new Partido(numeroPartido, siglaPartido, nomePartido, f);
             partidos.put(numeroPartido, p);
+            if(f != null){
+                f.adicionaPartido(p);
+            }
             return p;
         }
+    }
+
+    public void adicionaCandidatos(Candidato c){
+        candidatos.add(c);
     }
 
     public String getNomePartido() {

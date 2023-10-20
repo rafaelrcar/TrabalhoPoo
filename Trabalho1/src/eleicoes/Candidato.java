@@ -13,6 +13,7 @@ public class Candidato {
     private int genero; //CD_GENERO (45)
     private String destinacaoVotos; //NM_TIPO_DESTINACAO_VOTOS (66)
     private int situacaoCandidato; //CD_SITUACAO_CANDIDADO_TOT (67)
+    private int quantidadeVotos; //QT_VOTOS (21)
 
     public Candidato(int numeroCandidato, String nomeUrna, Partido partido, LocalDate dataNascimento,
             Boolean candidatoEleito, int genero, String destVotos, int situacaoCandidato) {
@@ -24,6 +25,8 @@ public class Candidato {
         this.genero = genero;
         this.destinacaoVotos = destVotos;
         this.situacaoCandidato = situacaoCandidato;
+
+        partido.adicionaCandidatos(this);
     }
 
     public void imprimeCandidato(){

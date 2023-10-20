@@ -8,6 +8,7 @@ import java.util.List;
 public class Federacao {
     private int numeroFederacao;
     private String nomeFederacao;
+    private int legendaFederacao;
     private List<Partido> partidosFederacao = new ArrayList<>();
 
 
@@ -29,5 +30,8 @@ public class Federacao {
             return f;
         }
     }
-}
 
+    public void adicionaPartido(Partido p){
+        partidosFederacao.add(p);
+    }
+}

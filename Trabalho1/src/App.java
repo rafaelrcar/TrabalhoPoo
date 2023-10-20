@@ -1,15 +1,22 @@
-import java.util.*;
 import eleicoes.*;
 import processaEntrada.LeCandidatos;
+import processaEntrada.LeVotacao;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class App {
     public static void main(String[] args) throws Exception {
-        List<CandidatoFederal> candidatosFederais = new ArrayList<>();
-        List<CandidatoEstadual> candidatosEstaduais = new ArrayList<>();
+        ArrayList<Candidato> candidatos = new ArrayList<>();
         HashMap<Integer, Partido> partidos = new HashMap<>();
         HashMap<Integer, Federacao> federacoes = new HashMap<>();
 
-        LeCandidatos.leitura(candidatosFederais, candidatosEstaduais, partidos, federacoes);
+        if(args[3] == "--federal"){
+            LeCandidatos.leitura(candidatos, partidos, federacoes, 6);
+            LeVotacao.leitura(candidatos, partidos, federacoes, 6);
+        }
+        else if(args[3] == "--estadual"){
+            LeCandidatos.leitura(candidatos, partidos, federacoes, 7);
+            LeVotacao.leitura(candidatos, partidos, federacoes, 7);
+        }
     }
 }
