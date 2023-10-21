@@ -4,14 +4,14 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.time.format.DateTimeFormatter;
-
+import enums.*;
 import eleicoes.*;
 
 public class LeCandidatos{
 
-    public static void leitura(HashMap<Integer, Candidato> candidatos, HashMap<Integer, Partido> partidos, HashMap<Integer, Federacao> federacoes, int tipoCandidato) {
+    public static void leitura(HashMap<Integer, Candidato> candidatos, HashMap<Integer, Partido> partidos, HashMap<Integer, Federacao> federacoes, int tipoCandidato, String arquivo) {
         
-        try(FileInputStream fin = new FileInputStream("candidatos.csv"); Scanner s = new Scanner(fin, "ISO-8859-1")){
+        try(FileInputStream fin = new FileInputStream(arquivo); Scanner s = new Scanner(fin, "ISO-8859-1")){
             s.nextLine();
             
             while(s.hasNextLine()){
@@ -46,9 +46,9 @@ public class LeCandidatos{
                         String destinacaoVotos = lineScanner.next();
                         String situacaoCandidato = lineScanner.next();
 
-                        Candidato c = new Candidato(Integer.parseInt(numero), nome, p, 
-                        LocalDate.parse(dataNascimento,DateTimeFormatter.ofPattern("dd/MM/yyyy")), 
-                        Boolean.parseBoolean(candidatoEleito), Integer.parseInt(genero), destinacaoVotos, Integer.parseInt(situacaoCandidato));
+                        Candidato c = new Candidato(Integer.parseInt(numero), nome, p, LocalDate.parse(dataNascimento,DateTimeFormatter.ofPattern("dd/MM/yyyy")), 
+                        CandidatoEleito.getCandidatoEleito(Integer.parseInt(candidatoEleito)), Genero.getGenero(Integer.parseInt(genero)), destinacaoVotos,
+                        SituacaoCandidato.getSituacaoCandidato(Integer.parseInt(situacaoCandidato)));
                         candidatos.put(Integer.parseInt(numero), c);
                     }
                 }

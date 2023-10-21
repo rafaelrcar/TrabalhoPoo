@@ -6,8 +6,8 @@ import java.util.HashMap;
 
 public class LeVotacao{
 
-    public static void leitura(HashMap<Integer, Candidato> candidatos, HashMap<Integer, Partido> partidos, HashMap<Integer, Federacao> federacoes, int tipoCandidato){
-        try(FileInputStream fin = new FileInputStream("votacao.csv");
+    public static void leitura(HashMap<Integer, Candidato> candidatos, HashMap<Integer, Partido> partidos, HashMap<Integer, Federacao> federacoes, int tipoCandidato, String arquivo){
+        try(FileInputStream fin = new FileInputStream(arquivo);
             Scanner s = new Scanner(fin, "ISO-8859-1")){
             s.nextLine();
             
