@@ -40,9 +40,8 @@ public class Candidato {
             partido.setVotosNominais(quantidadeVotos);
         }
         else{
-            if(destinacaoVotos == "Válido (legenda)"){
+            if(destinacaoVotos == "Válido (legenda)")
                 partido.setLegendaPartido(quantidadeVotos);
-            }
         }
     }
 
@@ -69,21 +68,22 @@ public class Candidato {
     public LocalDate getDataNascimento(){
         return this.dataNascimento;
     }
+
     public SituacaoCandidato getSituacao() {
         return this.situacao;
     }
+    
     public Genero getGenero(){
         return this.genero;
     }
+    
     public static class CandidatoComparator implements Comparator<Candidato> {
         @Override
         public int compare(Candidato entry1, Candidato entry2) {
-            if(entry1.quantidadeVotos != entry2.quantidadeVotos){
+            if(entry1.quantidadeVotos != entry2.quantidadeVotos)
                 return Integer.compare(entry2.quantidadeVotos, entry1.quantidadeVotos); 
-            }       
-            else{
+            else
                 return entry1.getDataNascimento().compareTo(entry2.getDataNascimento());
-            }
         }
     }
 }

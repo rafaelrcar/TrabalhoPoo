@@ -1,5 +1,7 @@
 package eleicoes;
 
+import java.io.PrintWriter;
+import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
@@ -8,8 +10,8 @@ import java.util.HashMap;
 
 import enums.*;
 
-public class ProcessaEleicoes{
-    public static int processaQuantidadeVagas(HashMap<Integer, Candidato> candidatos){
+public class ProcessaEleicoes{    
+    public static int processaQuantidadeVagas(HashMap<Integer, Candidato> candidatos, PrintWriter writer, NumberFormat nf){
         int count = 0;
 
         for (HashMap.Entry<Integer, Candidato> candidato : candidatos.entrySet()){
@@ -19,57 +21,66 @@ public class ProcessaEleicoes{
                 count++;
             }
         }
-        System.out.println("Número de vagas: " + count + "\n");
+        writer.println("Número de vagas: " + nf.format(count) + "\n");
 
         return count;
     }
 
-    public static void processaEleitos(ArrayList<Candidato>listCandidatos){
+    public static void processaEleitos(ArrayList<Candidato>listCandidatos, PrintWriter writer, NumberFormat nf){
         int i = 1;
+
+        writer.println("Deputados estaduais eleitos:");
+
         for(Candidato c: listCandidatos){
             if(c.getCandidatoEleito() == CandidatoEleito.ELEITO){
                 
-                System.out.print(i + " - ");
+                writer.print(i + " - ");
                 if(c.getPartido().getFederacao() != null){
-                    System.out.print("*");
+                    writer.print("*");
                 }
-                System.out.print(c.getNomeUrna() + " (" + c.getPartido().getSiglaPartido() + ", " + c.getQuantidadeVotos() + ")" + "\n");
+                writer.print(c.getNomeUrna() + " (" + c.getPartido().getSiglaPartido() + ", " + nf.format(c.getQuantidadeVotos()) + ")" + "\n");
                 
                 i++;
             }
         }
-        System.out.println();
+        writer.println();
     }
 
-    public static void processaMaisVotados(ArrayList<Candidato>listCandidatos, int quantidadeVagas){
+    public static void processaMaisVotados(ArrayList<Candidato>listCandidatos, int quantidadeVagas, PrintWriter writer, NumberFormat nf){
         int i = 1;
+
+        writer.println("Candidatos mais votados (em ordem decrescente de votação e respeitando número de vagas):");
+
         for(Candidato c: listCandidatos){
             
-            System.out.print(i + " - ");
+            writer.print(i + " - ");
             if(c.getPartido().getFederacao() != null){
-                System.out.print("*");
+                writer.print("*");
             }
-            System.out.print(c.getNomeUrna() + " (" + c.getPartido().getSiglaPartido() + ", " + c.getQuantidadeVotos() + ")" + "\n");
+            writer.print(c.getNomeUrna() + " (" + c.getPartido().getSiglaPartido() + ", " + nf.format(c.getQuantidadeVotos()) + ")" + "\n");
 
             if(i == quantidadeVagas){
                 break;
             }
             i++;
         }
-        System.out.println();
+        writer.println();
     }
 
-    public static void processaNaoEleitosMajoritaria(ArrayList<Candidato>listCandidatos, int quantidadeVagas){
+    public static void processaNaoEleitosMajoritaria(ArrayList<Candidato>listCandidatos, int quantidadeVagas, PrintWriter writer, NumberFormat nf){
         int i = 1;
+
+        writer.println("Teriam sido eleitos se a votação fosse majoritária, e não foram eleitos:");
+        writer.println("(com sua posição no ranking de mais votados)");
 
         for(Candidato c: listCandidatos){
             if(c.getCandidatoEleito() == CandidatoEleito.NAO_ELEITO){
                 
-                System.out.print(i + " - ");
+                writer.print(i + " - ");
                 if(c.getPartido().getFederacao() != null){
-                    System.out.print("*");
+                    writer.print("*");
                 }
-                System.out.print(c.getNomeUrna() + " (" + c.getPartido().getSiglaPartido() + ", " + c.getQuantidadeVotos() + ")" + "\n");
+                writer.print(c.getNomeUrna() + " (" + c.getPartido().getSiglaPartido() + ", " + nf.format(c.getQuantidadeVotos()) + ")" + "\n");
             }
 
             if(i == quantidadeVagas){
@@ -78,71 +89,78 @@ public class ProcessaEleicoes{
 
             i++;
         }
-        System.out.println();
+        writer.println();
     }
     
-    public static void processaEleitosSistemaProporcional(ArrayList<Candidato> listCandidatos, int quantidadeVagas){
+    public static void processaEleitosSistemaProporcional(ArrayList<Candidato> listCandidatos, int quantidadeVagas, PrintWriter writer, NumberFormat nf){
         int i = 1;
+        
+        writer.println("Eleitos, que se beneficiaram do sistema proporcional:");
+        writer.println("(com sua posição no ranking de mais votados)");
+
         for(Candidato c: listCandidatos){
             if(c.getCandidatoEleito() == CandidatoEleito.ELEITO){
                 if(i > quantidadeVagas){
-                    System.out.print(i + " - ");
+                    writer.print(i + " - ");
                     if(c.getPartido().getFederacao() != null){
-                        System.out.print("*");
+                        writer.print("*");
                     }
-                    System.out.print(c.getNomeUrna() + " (" + c.getPartido().getSiglaPartido() + ", " + c.getQuantidadeVotos() + ")" + "\n");
+                    writer.print(c.getNomeUrna() + " (" + c.getPartido().getSiglaPartido() + ", " + nf.format(c.getQuantidadeVotos()) + ")" + "\n");
                 }
             }
             i++;
         }
-        System.out.println();
+        writer.println();
     }
 
-    public static void processaPartidos(ArrayList<Partido>listPartidos){
+    public static void processaPartidos(ArrayList<Partido>listPartidos, PrintWriter writer, NumberFormat nf){
         int i = 1;
+
+        writer.println("Votação dos partidos e número de candidatos eleitos:");
+
         for (Partido p: listPartidos) {
-            Partido valor = p;
-            int quantidadeEleitos = valor.calculaEleitos();
-            int quantidadeVotos = valor.getLegendaPartido() + valor.getVotosNominais();
+            int quantidadeEleitos = p.calculaEleitos();
+            int quantidadeVotos = p.getLegendaPartido() + p.getVotosNominais();
 
-            System.out.print(i + " - " + valor.getSiglaPartido() + ", " + quantidadeVotos);
+            writer.print(i + " - " + p.getSiglaPartido() + " - " + p.getNumeroPartido() + ", " + nf.format(quantidadeVotos));
             if(quantidadeVotos > 1){
-                System.out.print(" votos (");
+                writer.print(" votos (");
             }
             else{
-                System.out.print(" voto (");
+                writer.print(" voto (");
             }
-            System.out.print(valor.getVotosNominais());
+            writer.print(nf.format(p.getVotosNominais()));
 
-            if(valor.getVotosNominais() > 1){
-                System.out.print(" nominais e ");
+            if(p.getVotosNominais() > 1){
+                writer.print(" nominais e ");
             }
             else{
-                System.out.print(" nominal e ");
+                writer.print(" nominal e ");
             }
-            System.out.print(valor.getLegendaPartido() + " de legenda), " + quantidadeEleitos);
+            writer.print(nf.format(p.getLegendaPartido())  + " de legenda), " + quantidadeEleitos);
             if(quantidadeEleitos > 1){
-                System.out.println(" candidatos eleitos");
+                writer.println(" candidatos eleitos");
             }
             else{
-                System.out.println(" candidato eleito");
+                writer.println(" candidato eleito");
             }    
             i++;
         }
-        System.out.println();
+        writer.println();
     }
 
-    public static void processaPrimeiroUltimoColocados(ArrayList<Partido> listPartidos){
+    public static void processaPrimeiroUltimoColocados(ArrayList<Partido> listPartidos, PrintWriter writer, NumberFormat nf){
         ArrayList<Candidato> maisVotados = new ArrayList<>();
         HashMap<Integer, Candidato> menosVotados = new HashMap<>();
 
+        writer.println("Primeiro e último colocados de cada partido:");
+
         for(Partido p: listPartidos){
             Candidato auxMenor = new Candidato(), auxMaior = new Candidato();
-            Partido valor = p;
             int i = 0;
             
             if(p.getVotosNominais() > 0){
-                for(Candidato c: valor.getCandidatos()){
+                for(Candidato c: p.getCandidatos()){
                     if(c.getSituacao() == SituacaoCandidato.DEFERIDO){
                         if(i == 0){
                             auxMenor = c;
@@ -172,7 +190,7 @@ public class ProcessaEleicoes{
                 }
             
                 maisVotados.add(auxMaior);
-                menosVotados.put(valor.getNumeroPartido(), auxMenor);
+                menosVotados.put(p.getNumeroPartido(), auxMenor);
             }
         }
 
@@ -180,33 +198,33 @@ public class ProcessaEleicoes{
 
         int i = 1;
         for(Candidato c: maisVotados){
-            System.out.print(i + " - " + c.getPartido().getSiglaPartido() + ", " + c.getNomeUrna() + " (" + c.getNumero() + ", " + c.getQuantidadeVotos());
+            writer.print(i + " - " + c.getPartido().getSiglaPartido() + " - " + c.getPartido().getNumeroPartido() + ", " + c.getNomeUrna() + " (" + c.getNumero() + ", " + nf.format(c.getQuantidadeVotos()));
 
             if(c.getQuantidadeVotos() > 1){
-                System.out.print(" votos) / ");
+                writer.print(" votos) / ");
             }
             else{
-                System.out.print(" voto) / ");
+                writer.print(" voto) / ");
             }
 
             Candidato ultimoColocado = menosVotados.get(c.getPartido().getNumeroPartido());
 
-            System.out.print(ultimoColocado.getNomeUrna() + " (" + ultimoColocado.getNumero() + ", " + ultimoColocado.getQuantidadeVotos());
+            writer.print(ultimoColocado.getNomeUrna() + " (" + ultimoColocado.getNumero() + ", " + nf.format(ultimoColocado.getQuantidadeVotos()));
 
             if(ultimoColocado.getQuantidadeVotos() > 1){
-                System.out.print(" votos)\n");
+                writer.print(" votos)\n");
             }
             else{
-                System.out.print(" voto)\n");
+                writer.print(" voto)\n");
             }
 
             i++;
         }
 
-        System.out.println();
+        writer.println();
     }
     
-    public static void processaFaixaEtaria(ArrayList<Candidato> listCandidatos, int quantidadeEleitos, LocalDate dataEleicao){
+    public static void processaFaixaEtaria(ArrayList<Candidato> listCandidatos, int quantidadeEleitos, LocalDate dataEleicao, PrintWriter writer){
         int menorQue30 = 0, entre30e40 = 0, entre40e50 = 0, entre50e60 = 0, maiorQue60 = 0;
 
         for (Candidato candidato : listCandidatos) {
@@ -229,17 +247,16 @@ public class ProcessaEleicoes{
             }
         }
 
-        System.out.println("Eleitos, por faixa etária (na data da eleição):");
-        System.out.printf("      Idade < 30: %d (%.2f%%)\n", menorQue30, (((float)menorQue30 * 100)/(float)quantidadeEleitos));
-        System.out.printf("30 <= Idade < 40: %d (%.2f%%)\n", entre30e40, (((float)entre30e40 * 100)/(float)quantidadeEleitos));
-        System.out.printf("40 <= Idade < 50: %d (%.2f%%)\n", entre40e50, (((float)entre40e50 * 100)/(float)quantidadeEleitos));
-        System.out.printf("50 <= Idade < 60: %d (%.2f%%)\n", entre50e60, (((float)entre50e60 * 100)/(float)quantidadeEleitos));
-        System.out.printf("60 <= Idade     : %d (%.2f%%)\n", maiorQue60, (((float)maiorQue60 * 100)/(float)quantidadeEleitos));
-
-        System.out.println();
+        writer.println("Eleitos, por faixa etária (na data da eleição):");
+        writer.printf("      Idade < 30: %d (%.2f%%)\n", menorQue30, (((float)menorQue30 * 100)/(float)quantidadeEleitos));
+        writer.printf("30 <= Idade < 40: %d (%.2f%%)\n", entre30e40, (((float)entre30e40 * 100)/(float)quantidadeEleitos));
+        writer.printf("40 <= Idade < 50: %d (%.2f%%)\n", entre40e50, (((float)entre40e50 * 100)/(float)quantidadeEleitos));
+        writer.printf("50 <= Idade < 60: %d (%.2f%%)\n", entre50e60, (((float)entre50e60 * 100)/(float)quantidadeEleitos));
+        writer.printf("60 <= Idade     : %d (%.2f%%)\n", maiorQue60, (((float)maiorQue60 * 100)/(float)quantidadeEleitos));
+        writer.println();
     }
 
-    public static void processaGenero(ArrayList<Candidato> listCandidatos, int quantidadeEleitos){
+    public static void processaGenero(ArrayList<Candidato> listCandidatos, int quantidadeEleitos, PrintWriter writer){
         int homem = 0, mulher = 0;
 
         for(Candidato candidato: listCandidatos){
@@ -253,14 +270,13 @@ public class ProcessaEleicoes{
             }
         }
 
-        System.out.println("Eleitos, por gênero:");
-        System.out.printf("Feminino: %d (%.2f%%)\n", mulher, (((float)mulher*100)/(float)quantidadeEleitos));
-        System.out.printf("Masculino: %d (%.2f%%)\n", homem, (((float)homem*100)/(float)quantidadeEleitos));
-
-        System.out.println();
+        writer.println("Eleitos, por gênero:");
+        writer.printf("Feminino:  %d (%.2f%%)\n", mulher, (((float)mulher*100)/(float)quantidadeEleitos));
+        writer.printf("Masculino: %d (%.2f%%)\n", homem, (((float)homem*100)/(float)quantidadeEleitos));
+        writer.println();
     }
 
-    public static void processaVotosTotais(ArrayList<Partido> listPartidos){
+    public static void processaVotosTotais(ArrayList<Partido> listPartidos, PrintWriter writer, NumberFormat nf){
         int votosValidos = 0, votosNominais = 0, votosLegenda = 0;
 
         for(Partido p: listPartidos){
@@ -269,10 +285,12 @@ public class ProcessaEleicoes{
         }
         votosValidos = votosLegenda + votosNominais;
 
-        System.out.println("Total de votos válidos:    " + votosValidos);
-        System.out.printf("Total de votos nominais:   %d (%.2f%%)\n", votosNominais, ((float)votosNominais*100)/(float)votosValidos);
-        System.out.printf("Total de votos de legenda: %d (%.2f%%)\n", votosLegenda, ((float)votosLegenda*100)/(float)votosValidos);
+        writer.println("Total de votos válidos:    " + nf.format(votosValidos));
 
-        System.out.println();
+        writer.print("Total de votos nominais:   " + nf.format(votosNominais));
+        writer.printf(" (%.2f%%)\n", ((float)votosNominais*100)/(float)votosValidos);
+        
+        writer.print("Total de votos de legenda: " + nf.format(votosLegenda));
+        writer.printf(" (%.2f%%)\n", ((float)votosLegenda*100)/(float)votosValidos);
     }
 }

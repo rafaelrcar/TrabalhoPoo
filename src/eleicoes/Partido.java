@@ -56,15 +56,14 @@ public class Partido {
     }
 
     public static Partido verificaPartido(int numeroPartido, String siglaPartido, String nomePartido, Federacao f, HashMap<Integer,Partido> partidos){
-        if(partidos.containsKey(numeroPartido)){
+        if(partidos.containsKey(numeroPartido))
             return partidos.get(numeroPartido);
-        }
         else{
             Partido p = new Partido(numeroPartido, siglaPartido, nomePartido, f);
             partidos.put(numeroPartido, p);
-            if(f != null){
+            if(f != null)
                 f.adicionaPartido(p);
-            }
+
             return p;
         }
     }
@@ -76,18 +75,16 @@ public class Partido {
     public void setLegendaPartido(int legendaPartido) {
         this.legendaPartido += legendaPartido;
 
-        if(federacao != null){
+        if(federacao != null)
             federacao.setLegendaFederacao(legendaPartido);
-        }
     }
 
     public int calculaEleitos(){
         int count = 0;
 
         for(Candidato c: candidatos){
-            if(c.getCandidatoEleito() == CandidatoEleito.ELEITO){
+            if(c.getCandidatoEleito() == CandidatoEleito.ELEITO)
                 count++;
-            }
         }
 
         return count;
@@ -99,12 +96,10 @@ public class Partido {
             int votos1 = entry1.legendaPartido + entry1.votosNominais;
             int votos2 = entry2.legendaPartido + entry2.votosNominais;
 
-            if(votos1 != votos2){
-                return Integer.compare(votos2, votos1); 
-            }       
-            else{
+            if(votos1 != votos2)
+                return Integer.compare(votos2, votos1);
+            else
                 return Integer.compare(entry1.getNumeroPartido(), entry2.getNumeroPartido());
-            }
         }
     }
 }

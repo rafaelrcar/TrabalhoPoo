@@ -12,18 +12,16 @@ public class Federacao {
     private List<Partido> partidosFederacao = new ArrayList<>();
 
 
-    public Federacao(int numeroFederacao, String nomeFederacao) {
+    public Federacao(int numeroFederacao, String nomeFederacao){
         this.numeroFederacao = numeroFederacao;
         this.nomeFederacao = nomeFederacao;
     }
 
     public static Federacao verificaFederacao (int numeroFederacao, String nomeFederacao, HashMap<Integer, Federacao> federacoes){
-        if(numeroFederacao == -1){
+        if(numeroFederacao == -1)
             return null;
-        }
-        else if(federacoes.containsKey(numeroFederacao)){
+        else if(federacoes.containsKey(numeroFederacao))
             return federacoes.get(numeroFederacao);
-        }
         else{
             Federacao f = new Federacao(numeroFederacao, nomeFederacao);
             federacoes.put(numeroFederacao, f);
