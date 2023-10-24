@@ -29,8 +29,6 @@ public class ProcessaEleicoes{
     public static void processaEleitos(ArrayList<Candidato>listCandidatos, PrintWriter writer, NumberFormat nf){
         int i = 1;
 
-        writer.println("Deputados estaduais eleitos:");
-
         for(Candidato c: listCandidatos){
             if(c.getCandidatoEleito() == CandidatoEleito.ELEITO){
                 
@@ -38,7 +36,7 @@ public class ProcessaEleicoes{
                 if(c.getPartido().getFederacao() != null){
                     writer.print("*");
                 }
-                writer.print(c.getNomeUrna() + " (" + c.getPartido().getSiglaPartido() + ", " + nf.format(c.getQuantidadeVotos()) + ")" + "\n");
+                writer.print(c.getNomeUrna() + " (" + c.getPartido().getSiglaPartido() + ", " + nf.format(c.getQuantidadeVotos()) + " votos)" + "\n");
                 
                 i++;
             }
@@ -57,7 +55,7 @@ public class ProcessaEleicoes{
             if(c.getPartido().getFederacao() != null){
                 writer.print("*");
             }
-            writer.print(c.getNomeUrna() + " (" + c.getPartido().getSiglaPartido() + ", " + nf.format(c.getQuantidadeVotos()) + ")" + "\n");
+            writer.print(c.getNomeUrna() + " (" + c.getPartido().getSiglaPartido() + ", " + nf.format(c.getQuantidadeVotos()) + " votos)" + "\n");
 
             if(i == quantidadeVagas){
                 break;
@@ -80,7 +78,7 @@ public class ProcessaEleicoes{
                 if(c.getPartido().getFederacao() != null){
                     writer.print("*");
                 }
-                writer.print(c.getNomeUrna() + " (" + c.getPartido().getSiglaPartido() + ", " + nf.format(c.getQuantidadeVotos()) + ")" + "\n");
+                writer.print(c.getNomeUrna() + " (" + c.getPartido().getSiglaPartido() + ", " + nf.format(c.getQuantidadeVotos()) + " votos)" + "\n");
             }
 
             if(i == quantidadeVagas){
@@ -105,7 +103,7 @@ public class ProcessaEleicoes{
                     if(c.getPartido().getFederacao() != null){
                         writer.print("*");
                     }
-                    writer.print(c.getNomeUrna() + " (" + c.getPartido().getSiglaPartido() + ", " + nf.format(c.getQuantidadeVotos()) + ")" + "\n");
+                    writer.print(c.getNomeUrna() + " (" + c.getPartido().getSiglaPartido() + ", " + nf.format(c.getQuantidadeVotos()) + " votos)" + "\n");
                 }
             }
             i++;
@@ -172,7 +170,7 @@ public class ProcessaEleicoes{
                                 auxMaior = c;
                             }
                             else if(auxMaior.getQuantidadeVotos() == c.getQuantidadeVotos()){
-                                if(auxMaior.getNumero() < c.getNumero()){
+                                if(auxMaior.getDataNascimento().isBefore(c.getDataNascimento())){
                                     auxMaior = c;
                                 }
                             }
@@ -180,7 +178,7 @@ public class ProcessaEleicoes{
                                 auxMenor = c;
                             }
                             else if(auxMenor.getQuantidadeVotos() == c.getQuantidadeVotos()){
-                                if(auxMenor.getNumero() < c.getNumero()){
+                                if(auxMenor.getDataNascimento().isBefore(c.getDataNascimento())){
                                     auxMenor = c;
                                 }
                             }

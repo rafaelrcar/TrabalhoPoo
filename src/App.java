@@ -18,7 +18,7 @@ public class App {
         HashMap<Integer, Candidato> hashCandidatos = new HashMap<>();
         HashMap<Integer, Partido> hashPartidos = new HashMap<>();
         HashMap<Integer, Federacao> federacoes = new HashMap<>();
-
+        
         String nomeArquivo = null;
         PrintWriter writer = null;
 
@@ -54,6 +54,12 @@ public class App {
 		NumberFormat nf = NumberFormat.getInstance(brLocale);
 
         int quantidadeVagas = ProcessaEleicoes.processaQuantidadeVagas(hashCandidatos, writer, nf);   
+        if(args[0].equals("--federal")){
+            writer.println("Deputados federais eleitos:");
+        }
+        else if(args[0].equals("--estadual")){
+            writer.println("Deputados estaduais eleitos:");
+        }
         ProcessaEleicoes.processaEleitos(listCandidatos, writer, nf);
         ProcessaEleicoes.processaMaisVotados(listCandidatos, quantidadeVagas, writer, nf);
         ProcessaEleicoes.processaNaoEleitosMajoritaria(listCandidatos, quantidadeVagas, writer, nf);

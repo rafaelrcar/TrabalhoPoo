@@ -40,7 +40,7 @@ public class Candidato {
             partido.setVotosNominais(quantidadeVotos);
         }
         else{
-            if(destinacaoVotos == "Válido (legenda)")
+            if(destinacaoVotos.equals("Válido (legenda)"))
                 partido.setLegendaPartido(quantidadeVotos);
         }
     }

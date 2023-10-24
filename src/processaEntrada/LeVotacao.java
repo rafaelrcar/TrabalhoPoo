@@ -1,12 +1,13 @@
 package processaEntrada;
 import eleicoes.*;
+
 import java.util.Scanner;
 import java.io.FileInputStream;
 import java.util.HashMap;
 
 public class LeVotacao{
 
-    public static void leitura(HashMap<Integer, Candidato> candidatos, HashMap<Integer, Partido> partidos, HashMap<Integer, Federacao> federacoes, int tipoCandidato, String arquivo){
+    public static void leitura(HashMap<Integer, Candidato> candidatos,  HashMap<Integer, Partido> partidos, HashMap<Integer, Federacao> federacoes, int tipoCandidato, String arquivo){
         try(FileInputStream fin = new FileInputStream(arquivo);
             Scanner s = new Scanner(fin, "ISO-8859-1")){
             s.nextLine();
@@ -28,7 +29,7 @@ public class LeVotacao{
                         if(candidatoVotado < 95 || candidatoVotado > 98){
                             lineScanner.next();
                             String qtdVotos = lineScanner.next();
-
+                            
                             if(candidatos.containsKey(candidatoVotado)){
                                 Candidato c = candidatos.get(candidatoVotado);
                                 c.setQuantidadeVotos(Integer.parseInt(qtdVotos));
