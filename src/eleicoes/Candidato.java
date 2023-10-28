@@ -3,7 +3,6 @@ package eleicoes;
 import java.time.LocalDate;
 import enums.*;
 import java.util.Comparator;
-//import java.util.Date;
 
 public class Candidato {
     private int numero; //NR_CANDIDATO (16)

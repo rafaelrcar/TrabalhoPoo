@@ -1,5 +1,5 @@
 package eleicoes;
-
+import enums.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -61,8 +61,6 @@ public class Partido {
         else{
             Partido p = new Partido(numeroPartido, siglaPartido, nomePartido, f);
             partidos.put(numeroPartido, p);
-            if(f != null)
-                f.adicionaPartido(p);
 
             return p;
         }
@@ -75,8 +73,6 @@ public class Partido {
     public void setLegendaPartido(int legendaPartido) {
         this.legendaPartido += legendaPartido;
 
-        if(federacao != null)
-            federacao.setLegendaFederacao(legendaPartido);
     }
 
     public int calculaEleitos(){

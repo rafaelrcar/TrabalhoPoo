@@ -1,5 +1,7 @@
 package processaEntrada;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -9,7 +11,7 @@ import eleicoes.*;
 
 public class LeCandidatos{
 
-    public static void leitura(HashMap<Integer, Candidato> candidatos, HashMap<Integer, Partido> partidos, HashMap<Integer, Federacao> federacoes, int tipoCandidato, String arquivo){
+    public static void leitura(HashMap<Integer, Candidato> candidatos, HashMap<Integer, Partido> partidos, int tipoCandidato, String arquivo) throws FileNotFoundException, IOException{
         
         try(FileInputStream fin = new FileInputStream(arquivo); Scanner s = new Scanner(fin, "ISO-8859-1")){
             s.nextLine();
@@ -31,12 +33,12 @@ public class LeCandidatos{
                     String siglaPartido = lineScanner.next();
                     String nomePartido = lineScanner.next();
                     String numeroFederacao = lineScanner.next();
-                    String nomeFederacao = lineScanner.next();
-                    Federacao f = Federacao.verificaFederacao(Integer.parseInt(numeroFederacao), nomeFederacao, federacoes);
-                    Partido p = Partido.verificaPartido(Integer.parseInt(numeroPartido), siglaPartido, nomePartido, f, partidos);
+
+                    Partido p = Partido.verificaPartido(Integer.parseInt(numeroPartido), siglaPartido, nomePartido, Federacao.getFederacao(Integer.parseInt(numeroFederacao)), partidos);
 
                     if(Integer.parseInt(cargo) == tipoCandidato){
-                        setScanner(lineScanner, 10);
+                        
+                        setScanner(lineScanner, 11);
                         String dataNascimento = lineScanner.next();
                         setScanner(lineScanner, 2);
                         String genero = lineScanner.next();
@@ -47,6 +49,7 @@ public class LeCandidatos{
                         String situacaoCandidato = lineScanner.next();
 
                         if(destinacaoVotos.equals("Válido (legenda)") || destinacaoVotos.equals("Válido")){
+                            
                             Candidato c = new Candidato(Integer.parseInt(numero), nome, p, LocalDate.parse(dataNascimento,DateTimeFormatter.ofPattern("dd/MM/yyyy")), 
                             CandidatoEleito.getCandidatoEleito(Integer.parseInt(candidatoEleito)), Genero.getGenero(Integer.parseInt(genero)), destinacaoVotos,
                             SituacaoCandidato.getSituacaoCandidato(Integer.parseInt(situacaoCandidato)));
@@ -56,10 +59,6 @@ public class LeCandidatos{
                     }
                 }
             }
-        }
-        catch(Exception e){
-                System.out.println("arquivo nao encontrado");
-                e.printStackTrace();
         }
     }
 

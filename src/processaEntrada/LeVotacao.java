@@ -3,11 +3,13 @@ import eleicoes.*;
 
 import java.util.Scanner;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.HashMap;
 
 public class LeVotacao{
 
-    public static void leitura(HashMap<Integer, Candidato> candidatos,  HashMap<Integer, Partido> partidos, HashMap<Integer, Federacao> federacoes, int tipoCandidato, String arquivo){
+    public static void leitura(HashMap<Integer, Candidato> candidatos,  HashMap<Integer, Partido> partidos, int tipoCandidato, String arquivo) throws FileNotFoundException, IOException{
         try(FileInputStream fin = new FileInputStream(arquivo);
             Scanner s = new Scanner(fin, "ISO-8859-1")){
             s.nextLine();
@@ -43,10 +45,7 @@ public class LeVotacao{
                 }
             }
         }
-        catch(Exception e){
-            System.out.println("arquivo nao encontrado");
-            e.printStackTrace();
-        }
+        
     }
     
     public static void setScanner(Scanner lineScanner, int q){

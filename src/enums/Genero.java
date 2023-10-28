@@ -25,4 +25,3 @@ public enum Genero {
             return FEMININO;
     }
 }
-

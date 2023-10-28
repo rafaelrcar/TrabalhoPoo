@@ -32,7 +32,7 @@ public class ProcessaEleicoes{
             if(c.getCandidatoEleito() == CandidatoEleito.ELEITO){
                 
                 System.out.print(i + " - ");
-                if(c.getPartido().getFederacao() != null){
+                if(c.getPartido().getFederacao() == Federacao.TEM_FEDERACAO){
                     System.out.print("*");
                 }
                 System.out.println(c.getNomeUrna() + " (" + c.getPartido().getSiglaPartido() + ", " + nf.format(c.getQuantidadeVotos()) + " votos)" + "\n");
@@ -51,7 +51,7 @@ public class ProcessaEleicoes{
         for(Candidato c: listCandidatos){
             
             System.out.print(i + " - ");
-            if(c.getPartido().getFederacao() != null){
+            if(c.getPartido().getFederacao() == Federacao.TEM_FEDERACAO){
                 System.out.print("*");
             }
             System.out.println(c.getNomeUrna() + " (" + c.getPartido().getSiglaPartido() + ", " + nf.format(c.getQuantidadeVotos()) + " votos)" + "\n");
@@ -67,14 +67,14 @@ public class ProcessaEleicoes{
     public static void processaNaoEleitosMajoritaria(ArrayList<Candidato>listCandidatos, int quantidadeVagas, NumberFormat nf){
         int i = 1;
 
-        System.out.print("Teriam sido eleitos se a votação fosse majoritária, e não foram eleitos:");
+        System.out.println("Teriam sido eleitos se a votação fosse majoritária, e não foram eleitos:");
         System.out.println("(com sua posição no ranking de mais votados)");
 
         for(Candidato c: listCandidatos){
             if(c.getCandidatoEleito() == CandidatoEleito.NAO_ELEITO){
                 
-                System.out.println(i + " - ");
-                if(c.getPartido().getFederacao() != null){
+                System.out.print(i + " - ");
+                if(c.getPartido().getFederacao() == Federacao.TEM_FEDERACAO){
                     System.out.print("*");
                 }
                 System.out.println(c.getNomeUrna() + " (" + c.getPartido().getSiglaPartido() + ", " + nf.format(c.getQuantidadeVotos()) + " votos)" + "\n");
@@ -92,14 +92,14 @@ public class ProcessaEleicoes{
     public static void processaEleitosSistemaProporcional(ArrayList<Candidato> listCandidatos, int quantidadeVagas, NumberFormat nf){
         int i = 1;
         
-        System.out.print("Eleitos, que se beneficiaram do sistema proporcional:");
+        System.out.println("Eleitos, que se beneficiaram do sistema proporcional:");
         System.out.println("(com sua posição no ranking de mais votados)");
 
         for(Candidato c: listCandidatos){
             if(c.getCandidatoEleito() == CandidatoEleito.ELEITO){
                 if(i > quantidadeVagas){
                     System.out.print(i + " - ");
-                    if(c.getPartido().getFederacao() != null){
+                    if(c.getPartido().getFederacao() == Federacao.TEM_FEDERACAO){
                         System.out.print("*");
                     }
                     System.out.println(c.getNomeUrna() + " (" + c.getPartido().getSiglaPartido() + ", " + nf.format(c.getQuantidadeVotos()) + " votos)" + "\n");
@@ -119,7 +119,7 @@ public class ProcessaEleicoes{
             int quantidadeEleitos = p.calculaEleitos();
             int quantidadeVotos = p.getLegendaPartido() + p.getVotosNominais();
 
-            System.out.println(i + " - " + p.getSiglaPartido() + " - " + p.getNumeroPartido() + ", " + nf.format(quantidadeVotos));
+            System.out.print(i + " - " + p.getSiglaPartido() + " - " + p.getNumeroPartido() + ", " + nf.format(quantidadeVotos));
             if(quantidadeVotos > 1){
                 System.out.print(" votos (");
             }
